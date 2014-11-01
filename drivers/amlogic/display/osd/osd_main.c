@@ -99,7 +99,7 @@ _find_color_format(struct fb_var_screeninfo * var)
 		lower_margin=COLOR_INDEX_24_6666_A;
 		break;		
 		case 3:
-		upper_margin=COLOR_INDEX_32_ABGR;
+		upper_margin=COLOR_INDEX_32_ARGB;
 		lower_margin=COLOR_INDEX_32_BGRA;
 		break;
 		case 4:
