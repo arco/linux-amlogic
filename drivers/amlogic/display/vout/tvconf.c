@@ -103,6 +103,7 @@ static struct vmode_tvmode_tab_t mode_tab[] = {
     {TVMODE_720P, VMODE_720P},
     {TVMODE_1080I, VMODE_1080I},
     {TVMODE_1080P, VMODE_1080P},
+    {TVMODE_768P, VMODE_768P},
     {TVMODE_720P_50HZ, VMODE_720P_50HZ},
     {TVMODE_1080I_50HZ, VMODE_1080I_50HZ},
     {TVMODE_1080P_50HZ, VMODE_1080P_50HZ},
@@ -399,6 +400,18 @@ static const vinfo_t tv_info[] =
         .sync_duration_num = 50,
         .sync_duration_den = 1,
         .video_clk         = 148500000,
+    },
+    { /* VMODE_768P */
+        .name              = "768p60hz",
+        .mode              = VMODE_768P,
+        .width             = 1366,
+        .height            = 768,
+        .field_height      = 768,
+        .aspect_ratio_num  = 16,
+        .aspect_ratio_den  = 9,
+        .sync_duration_num = 60,
+        .sync_duration_den = 1,
+        //.video_clk         = 148500000,
     },
     { /* VMODE_1080P_24HZ */
 		.name              = "1080p24hz",
@@ -1040,6 +1053,7 @@ static int clock_fine_tune(void)
 		case VMODE_720P:
 		case VMODE_1080I:
 		case VMODE_1080P:
+        case VMODE_768P:
 		case VMODE_1080P_24HZ:
 		case VMODE_4K2K_30HZ:	
 		case VMODE_4K2K_24HZ:

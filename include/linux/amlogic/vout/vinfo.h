@@ -54,6 +54,7 @@ typedef enum {
     VMODE_1080I_59HZ , // for framerate automation 1080i 59.94hz
 #endif   
     VMODE_1080P ,
+    VMODE_768P ,
 #ifdef CONFIG_AML_VOUT_FRAMERATE_AUTOMATION
 	VMODE_1080P_59HZ , // for framerate automation 1080p 59.94hz
 #endif
@@ -127,6 +128,7 @@ typedef enum {
 	TVMODE_1080I_59HZ , // for framerate automation 1080i 59.94hz
 #endif
     TVMODE_1080P ,
+    TVMODE_768P,
 #ifdef CONFIG_AML_VOUT_FRAMERATE_AUTOMATION
 	TVMODE_1080P_59HZ , // for framerate automation 1080p 59.94hz
 #endif
