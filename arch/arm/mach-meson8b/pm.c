@@ -21,6 +21,8 @@
 #include <asm/delay.h>
 #include <asm/uaccess.h>
 
+#include <linux/gpio.h>
+
 #include <mach/pm.h>
 #include <mach/am_regs.h>
 #include <plat/sram.h>
@@ -35,6 +37,8 @@
 #ifdef CONFIG_MESON_TRUSTZONE
 #include <mach/meson-secure.h>
 #endif
+
+#include <linux/amlogic/aml_gpio_consumer.h>
 
 #ifdef CONFIG_SUSPEND_WATCHDOG
 #include <mach/watchdog.h>
@@ -236,8 +240,16 @@ void analog_switch(int flag)
 #ifdef CONFIG_HAS_EARLYSUSPEND
 static void meson_system_early_suspend(struct early_suspend *h)
 {
+	int ret;
 	if (!early_suspend_flag) {
-	printk(KERN_INFO "%s\n",__func__);
+	printk(KERN_INFO "2%s\n",__func__);
+
+	ret = amlogic_gpio_direction_output(GPIOAO_13,0,"power_led"); //for power LED
+	if(ret){
+		printk("---%s----can not set output pin \n",__func__);
+		amlogic_gpio_free(GPIOAO_13,"power_led");
+	}
+
 	if (pdata->set_exgpio_early_suspend) {
 		pdata->set_exgpio_early_suspend(OFF);
 	}
@@ -253,7 +265,8 @@ static void meson_system_late_resume(struct early_suspend *h)
 		//early_power_gate_switch(ON);
 		//early_clk_switch(ON);
 		early_suspend_flag = 0;
-		printk(KERN_INFO "%s\n",__func__);
+		printk(KERN_INFO "1%s\n",__func__);
+		amlogic_set_value(GPIOAO_13,1,"power_led");
 	}
 }
 #endif
@@ -468,6 +481,12 @@ static void meson_pm_suspend(void)
 #endif
 }
 
+void meson_pm_poweroff(void)
+{
+	amlogic_set_value(GPIOAO_13,0,"power_led");
+	aml_write_reg32(P_AO_RTI_STATUS_REG1, 0);
+}
+
 static int meson_pm_prepare(void)
 {
 	  printk(KERN_INFO "enter meson_pm_prepare!\n");
@@ -527,6 +546,7 @@ static struct meson_pm_config aml_pm_pdata = {
 
 static int __init meson_pm_probe(struct platform_device *pdev)
 {
+	int ret;
 	printk(KERN_INFO "enter meson_pm_probe!\n");
 #ifdef CONFIG_HAS_EARLYSUSPEND
 	early_suspend.level = EARLY_SUSPEND_LEVEL_DISABLE_FB;
@@ -534,6 +554,14 @@ static int __init meson_pm_probe(struct platform_device *pdev)
 	early_suspend.resume = meson_system_late_resume;
 	register_early_suspend(&early_suspend);
 #endif
+	ret = amlogic_gpio_request_one(GPIOAO_13,GPIOF_OUT_INIT_HIGH,"power_led"); //for power LED
+	if(ret){
+		printk("---%s----can not set output pin \n",__func__);
+		amlogic_gpio_free(GPIOAO_13,"power_led");
+	} else {
+		printk("---%s----set output pin success\n",__func__);
+	}
+
 	pdev->dev.platform_data=&aml_pm_pdata;
 	pdata = pdev->dev.platform_data;
 	if (!pdata) {
