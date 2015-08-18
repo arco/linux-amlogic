@@ -16,5 +16,5 @@ gsl_point_id-objs += aml_gsl_module.o
 ifeq ($(MAKE_FOR_LIB), y)
 gsl_point_id-objs += gsl_point_id_z.o 
 else 
-gsl_point_id-objs += ../../../../../../../../hardware/amlogic/touch/gsl_point_id_z.z 
+gsl_point_id-objs += gsl_point_id_z.z
 endif
