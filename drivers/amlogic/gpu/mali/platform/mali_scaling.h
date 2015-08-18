@@ -1,9 +1,9 @@
 /*
  * Copyright (C) 2013 ARM Limited. All rights reserved.
- * 
+ *
  * This program is free software and is provided to you under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation, and any use by you of this program is subject to the terms of such GNU licence.
- * 
+ *
  * A copy of the licence is included with the program, and can also be obtained from Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
@@ -106,6 +106,7 @@ void set_mali_schel_mode(u32 mode);
 
 /* for frequency reporter in DS-5 streamline. */
 u32 get_current_frequency(void);
+void mali_dev_restore(void);
 
 extern int mali_pm_statue;
 #endif /* __ARM_CORE_SCALING_H__ */

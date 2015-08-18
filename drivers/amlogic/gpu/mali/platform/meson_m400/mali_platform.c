@@ -268,7 +268,7 @@ _mali_osk_errcode_t mali_platform_init(void)
 			mali_init_flag = 1;
 		}
 		MALI_SUCCESS;
-	} else 
+	} else
 		panic("linux kernel should > 3.0\n");
 
 #if MESON_CPU_TYPE >= MESON_CPU_TYPE_MESON6

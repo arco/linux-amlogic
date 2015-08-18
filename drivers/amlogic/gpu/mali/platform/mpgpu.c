@@ -30,7 +30,7 @@
 #include "meson_main.h"
 
 #if MESON_CPU_TYPE >= MESON_CPU_TYPE_MESON8
-static ssize_t domain_stat_read(struct class *class, 
+static ssize_t domain_stat_read(struct class *class,
 			struct class_attribute *attr, char *buf)
 {
 	unsigned int val;
@@ -98,7 +98,7 @@ static ssize_t mpgpu_write(struct class *class,
 	} else if (!strncmp(pstart, LIMIT_CMD, MAX_TOKEN)) {
 		if ((kstrtouint(cprt, 10, &val) <0) || pmali_plat == NULL)
 			goto quit;
-		
+
 		if (val < 2) {
 			pmali_plat->limit_on = val;
 			if (val == 0) {
@@ -324,7 +324,7 @@ int mpgpu_class_init(void)
 	int ret = 0;
 	int i;
 	int attr_num =  ARRAY_SIZE(mali_class_attrs);
-	
+
 	ret = class_register(&mpgpu_class);
 	if (ret) {
 		printk(KERN_ERR "%s: class_register failed\n", __func__);

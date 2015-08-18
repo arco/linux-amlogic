@@ -1,6 +1,6 @@
 /*
  * platform.c
- * 
+ *
  * clock source setting and resource config
  *
  *  Created on: Dec 4, 2013
@@ -30,7 +30,7 @@
 
 /**
  *    For Meson 6tvd.
- * 
+ *
  */
 
 #if MESON_CPU_TYPE <= MESON_CPU_TYPE_MESON6TV
@@ -99,7 +99,7 @@ static struct resource meson_mali_resources[] =
 
 static struct resource meson_mali_resources[] =
 {
-	MALI_GPU_RESOURCES_MALI400_MP2(0xd0060000, 
+	MALI_GPU_RESOURCES_MALI400_MP2(0xd0060000,
 			INT_MALI_GP, INT_MALI_GP_MMU,
 			INT_MALI_PP, INT_MALI_PP2_MMU,
 			INT_MALI_PP_MMU, INT_MALI_PP2_MMU)
@@ -137,8 +137,9 @@ int mali_meson_init_start(struct platform_device* ptr_plt_dev)
 {
 	/* for mali platform data. */
 	struct mali_gpu_device_data* pdev = ptr_plt_dev->dev.platform_data;
-	pdev->utilization_interval = 1000,
-	pdev->utilization_callback = mali_gpu_utilization_callback,
+
+	pdev->control_interval = 1000;
+	pdev->utilization_callback = mali_gpu_utilization_callback;
 
 	/* for resource data. */
 	ptr_plt_dev->num_resources = ARRAY_SIZE(meson_mali_resources);
